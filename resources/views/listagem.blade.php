@@ -13,6 +13,7 @@
         <th scope="col">#</th>
         <th scope="col">Cliente</th>
         <th scope="col">Título</th>
+        <th scope="col">Emprestimo</th>
         <th scope="col">Contato</th>
         </tr>
     </thead>
@@ -20,8 +21,9 @@
         @foreach ($lista as $key)
             <tr>
                 <th scope="row">{{$key['id']}}</th>
-                <td>{{$key['nome']}}</td>
-                <td>{{$key['livro']}}</td>
+                <td>{{$key->clientes->nome}}</td>
+                <td>{{$key->titulo}}</td>
+                <td>{{$key->data_emprestimo}}</td>
                 <td>{{$key['contato']}}</td>
                 <td>
                     <button type="button" class="btn btn-primary">Ver mais</button>
