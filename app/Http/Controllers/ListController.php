@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Emprestimo;
 use App\Models\Cliente;
+use App\Models\Cadastroemp;
 
 class ListController extends Controller {
 
@@ -17,44 +18,72 @@ class ListController extends Controller {
 
         $emprestimos = Emprestimo::with('clientes')->get();
 
-        $lista = [
-                [
-                    "id" => 1,
-                    "nome" => "Fernando",
-                    "email" => "maiafenando@gmail.com",
-                    "contato" => "(42)9 9999-9999",
-                    "livro" => "A biblioteca da meia noite",
-                    "autor" => "Matt Haig",
-                    "data_emprestimo" => "26/06/2024",
-                    "dovolução_prevista" => "05/07/2024",
-                    "multa_atraso" => 0
-                ],
-                [
-                    "id" => 2,
-                    "nome" => "Maria",
-                    "email" => "maria@gmail.com",
-                    "contato" => "(42)9 9999-9999",
-                    "livro" => "Sherlock Holmes e o Cão dos Baskerville",
-                    "autor" => "Arthur Conan Doyle",
-                    "data_emprestimo" => "26/06/2024",
-                    "dovolução_prevista" => "05/07/2024",
-                    "multa_atraso" => 0
-                ],
-                [
-                    "id" => 3,
-                    "nome" => "Amanda",
-                    "email" => "amanda@gmail.com",
-                    "contato" => "(42)9 9999-9999",
-                    "livro" => "As armas da persuasão",
-                    "autor" => "Rober B. Cialdini",
-                    "data_emprestimo" => "26/06/2024",
-                    "dovolução_prevista" => "05/04/2024",
-                    "multa_atraso" => 150.45
-                ]
-            ];
 
         return view('listagem', ['lista'=>$emprestimos]);
-        #return view('listagem')->with(compact('users'));
+
+    }
+
+    public function listagem_cliente() {
+
+        $clientes = Cliente::all();
+
+        return view('listagem_cliente',['lista'=>$clientes]);
+    }
+
+    public function cadastroemp() {
+        
+        $cliente =  Cliente::all();
+
+        return view('cadastroemp', ['cliente'=>$cliente]);
+        
+    }
+
+    public function store(Request $request) {
+        $novo_cadastro = new Cliente;
+
+        $timezone = new \DateTimeZone('America/Sao_Paulo');
+        $data = new \DateTime('now', $timezone);
+
+        $novo_cadastro->nome = $request->name;
+        $novo_cadastro->email = $request->email;
+        $novo_cadastro->telefone = $request->telefone;
+        $novo_cadastro->cpf = $request->cpf;
+        $novo_cadastro->data_de_registro = $data;
+
+        $novo_cadastro->save();
+
+        return redirect('/');
+    }
+
+    public function deletar_cliente($id) {
+
+        $cliente = Cliente::findOrFail($id);
+        $cliente->delete();
+
+        return redirect('/listagem-cliente');
+    }
+
+    public function edit($id) {
+        $cliente = Cliente::findOrFail($id);
+
+        return view('alterar_cliente', ['cliente'=>$cliente]);
+    }
+
+    public function alterar_cliente(Request $request, $id) {
+        
+        $cliente = Cliente::find($id);
+
+        $timezone = new \DateTimeZone('America/Sao_Paulo');
+        $data = new \DateTime('now', $timezone);
+
+        $cliente->nome = $request->name;
+        $cliente->email = $request->email;
+        $cliente->telefone = $request->telefone;
+        $cliente->cpf = $request->cpf;
+
+        $cliente->save();
+
+        return redirect('listagem-cliente');
     }
 
 }

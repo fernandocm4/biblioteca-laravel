@@ -19,3 +19,9 @@ Route::get('/', function() {
     return view('welcome');
 });
 Route::get('/listagem', [ListController::class, 'listagem']);
+Route::get('/listagem-cliente',[ListController::class, 'listagem_cliente']);
+Route::get('/cadastro', [ListController::class, 'cadastroemp']);
+Route::get('/cadastro/{id}', [ListController::class, 'edit']);
+Route::put('/cadastro/alterar/{id}', [ListController::class, 'alterar_cliente']);
+Route::post('/cadastro', [ListController::class, 'store']);
+Route::delete('/listagem-cliente/{id}', [ListController::class, 'deletar_cliente']);
