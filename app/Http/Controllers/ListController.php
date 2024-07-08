@@ -8,6 +8,8 @@ use App\Models\Emprestimo;
 use App\Models\Cliente;
 use App\Models\Cadastroemp;
 
+
+
 class ListController extends Controller {
 
     public function listagem() {
@@ -39,10 +41,13 @@ class ListController extends Controller {
     }
 
     public function store(Request $request) {
+
+        
         $novo_cadastro = new Cliente;
 
         $timezone = new \DateTimeZone('America/Sao_Paulo');
         $data = new \DateTime('now', $timezone);
+
 
         $novo_cadastro->nome = $request->name;
         $novo_cadastro->email = $request->email;
@@ -57,10 +62,11 @@ class ListController extends Controller {
 
     public function deletar_cliente($id) {
 
-        $cliente = Cliente::findOrFail($id);
-        $cliente->delete();
+        /*$cliente = Cliente::find($id);
+        $cliente->delete();*/
+        Cliente::findOrFail($id)->delete();
 
-        return redirect('/listagem-cliente');
+        return redirect('/clientes');
     }
 
     public function edit($id) {
@@ -83,7 +89,9 @@ class ListController extends Controller {
 
         $cliente->save();
 
-        return redirect('listagem-cliente');
+        return redirect('/clientes');
     }
+
+
 
 }

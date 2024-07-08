@@ -17,6 +17,14 @@
     <nav class="navbar bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand">Biblioteca</a>
+        <ul>
+          <li>
+            <a href="/">Home</a>
+            <a href="/cadastro">Cadastro</a>
+            <a href="/emprestimos">Emprestimos</a>
+            <a href="/clientes">Clientes</a>
+          </li>
+        </ul>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>

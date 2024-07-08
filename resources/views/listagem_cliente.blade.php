@@ -25,18 +25,15 @@
                 <td>{{ $key->data_de_registro }}</td>
                 <td>
 
-
                     <a class="btn btn-primary" href="/cadastro/{{ $key->id }}" role="button">Atualizar</a>
-                    <button form="delete-form" type="submit" class="btn btn-danger">
-                        Excluir
-                    </button>
 
-                    <form id="delete-form" action="/listagem-cliente/{{ $key->id }}" method="POST">
+                    <form id="delete-form" action="/clientes/{{ $key->id }}" method="POST">
                         @csrf
+                        <button type="submit" class="btn btn-danger">
+                            Excluir
+                        </button>
                         @method('DELETE')
                     </form>
-
-
 
                 </td>
             </tr>
